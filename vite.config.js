@@ -8,6 +8,14 @@ export default defineConfig({
     watch: {
       usePolling: true,
       interval: 100
+    },
+    proxy: {
+      '/api' : {
+        target: 'http://localhost:4000'
+      },
+      '/images': {
+        target: 'http://localhost:4000'
+      }
     }
   }
 })
