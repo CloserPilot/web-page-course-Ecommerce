@@ -123,7 +123,7 @@ function CheckoutPage({ cart }) {
 
           </div>
 
-          {paymentSummary && (
+          {paymentSummary.length > 0 && (
             <>
               <div className="payment-summary">
                 <div className="payment-summary-title">
