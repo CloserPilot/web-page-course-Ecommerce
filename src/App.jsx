@@ -16,10 +16,12 @@ function App() {
   const [cart, setCart] = useState([]);
 
   useEffect(() => {
-    api.get('/api/cart?expand=product')
-      .then((response) => {
-        setCart(response.data);
-      })
+    const fetchAppData = async () => {
+      const response = await api.get('/api/cart?expand=product')
+      setCart(response.data);
+    };
+
+    fetchAppData();
   }, []);
 
   return (

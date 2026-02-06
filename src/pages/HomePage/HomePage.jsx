@@ -7,13 +7,14 @@ import './HomePage.css'
 
 function HomePage({ cart }) {
   const [products, setProducts] = useState([]);
-  console.log('VITE_API_BASE_URL:', import.meta.env.VITE_API_BASE_URL);
-
   useEffect(() => {
-    api.get('/api/products')
-      .then((response) => {
-        setProducts(response.data);
-      })
+    
+    const getHomeData = async () => {
+      const response = await api.get('/api/products')
+      setProducts(response.data);
+    };
+    
+    getHomeData(); 
   }, []);
 
   return (

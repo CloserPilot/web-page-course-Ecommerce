@@ -11,13 +11,13 @@ function CheckoutPage({ cart }) {
   const [deliveryOptions, setDeliveryOptions] = useState([]);
   const [paymentSummary, setPaymentSummary] = useState(null);
   useEffect(() => {
-    api.get('api/delivery?expand=estimatedDeliveryTime').then((response) => {
+    const fetchCheckouData = async () => {
+      let response =  await api.get('api/delivery?expand=estimatedDeliveryTime');
       setDeliveryOptions(response.data);
-    });
-
-    api.get('api/payment-summary').then((response) => {
+      response = await api.get('api/payment-summary');
       setPaymentSummary(response.data);
-    })
+    };
+    fetchCheckouData();
   }, []);
 
   return (

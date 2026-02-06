@@ -11,9 +11,12 @@ function OrderPage({ cart }) {
   const [orders, setOrders] = useState([]);
 
   useEffect(() => {
-    api.get('/api/order?expand=product').then((response) => {
+    const fetchOrders = async () => {
+      const response = await api.get('/api/order?expand=product');
       setOrders(response.data);
-    })
+    }
+
+    fetchOrders();
   }, []);
 
   return (
