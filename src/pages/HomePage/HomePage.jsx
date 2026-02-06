@@ -1,22 +1,21 @@
-import { Header } from '../../Components'
-import { Axios } from 'axios';
+import { Header } from '../../Components';
 import { useEffect, useState } from 'react';
+import { api } from '../../api'
 import './HomePage.css'
-import axios from 'axios';
 
 
 function HomePage() {
   const [products, setProducts] = useState([]);
   const [cart, setCart] = useState([]);
+  console.log('VITE_API_BASE_URL:', import.meta.env.VITE_API_BASE_URL);
 
   useEffect(() =>{
-    axios.get('/api/products')
+    api.get('/api/products')
       .then((response) => {
         setProducts(response.data);
-        console.log(response.data)
     })
 
-    axios.get('/api/cart')
+    api.get('/api/cart')
       .then((response) =>{
         setCart(response.data);
       })
@@ -40,7 +39,6 @@ function HomePage() {
                 <div className="product-name limit-text-to-2-lines">
                   {product.name}
                 </div>
-
                 <div className="product-rating-container">
                   <img className="product-rating-stars" src={`images/ratings/rating-${product.rating.stars*10}.png`} />
                   <div className="product-rating-count link-primary">
