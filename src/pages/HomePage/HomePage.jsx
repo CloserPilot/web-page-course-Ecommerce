@@ -1,24 +1,26 @@
 import { Header } from '../../Components';
 import { useEffect, useState } from 'react';
 import { api, fullURL } from '../../api'
+import { formatMoney } from '../../utils'
 import './HomePage.css'
 
 
-function HomePage({cart}) {
+function HomePage({ cart }) {
   const [products, setProducts] = useState([]);
   console.log('VITE_API_BASE_URL:', import.meta.env.VITE_API_BASE_URL);
 
-  useEffect(() =>{
+  useEffect(() => {
     api.get('/api/products')
       .then((response) => {
         setProducts(response.data);
-  })}, []);
+      })
+  }, []);
 
   return (
     <>
       <title>Ecommerce Project</title>
 
-      <Header cart={cart}/>
+      <Header cart={cart} />
 
       <div className="home-page">
         <div className="products-grid">
@@ -33,14 +35,14 @@ function HomePage({cart}) {
                   {product.name}
                 </div>
                 <div className="product-rating-container">
-                  <img className="product-rating-stars" src={`${fullURL}/images/ratings/rating-${product.rating.stars*10}.png`} />
+                  <img className="product-rating-stars" src={`${fullURL}/images/ratings/rating-${product.rating.stars * 10}.png`} />
                   <div className="product-rating-count link-primary">
                     {product.rating.count}
                   </div>
                 </div>
 
                 <div className="product-price">
-                  ${(product.priceCents / 100).toFixed(2)}
+                  {formatMoney(product.priceCents)}
                 </div>
 
                 <div className="product-quantity-container">

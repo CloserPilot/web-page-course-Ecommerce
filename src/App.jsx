@@ -16,7 +16,7 @@ function App() {
   const [cart, setCart] = useState([]);
 
   useEffect(() => {
-    api.get('/api/cart')
+    api.get('/api/cart?expand=product')
       .then((response) => {
         setCart(response.data);
       })
