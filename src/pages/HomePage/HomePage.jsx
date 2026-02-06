@@ -1,13 +1,31 @@
-import { Header } from '../../Components'
+import { Header } from '../../Components';
+import { useEffect, useState } from 'react';
+import { api } from '../../api'
 import './HomePage.css'
-import { products } from '../../../starting-code/data/products.js'
+
 
 function HomePage() {
+  const [products, setProducts] = useState([]);
+  const [cart, setCart] = useState([]);
+  console.log('VITE_API_BASE_URL:', import.meta.env.VITE_API_BASE_URL);
+
+  useEffect(() =>{
+    api.get('/api/products')
+      .then((response) => {
+        setProducts(response.data);
+    })
+
+    api.get('/api/cart')
+      .then((response) =>{
+        setCart(response.data);
+      })
+  }, []);
+
   return (
     <>
       <title>Ecommerce Project</title>
 
-      <Header />
+      <Header cart={cart}/>
 
       <div className="home-page">
         <div className="products-grid">
@@ -21,7 +39,6 @@ function HomePage() {
                 <div className="product-name limit-text-to-2-lines">
                   {product.name}
                 </div>
-
                 <div className="product-rating-container">
                   <img className="product-rating-stars" src={`images/ratings/rating-${product.rating.stars*10}.png`} />
                   <div className="product-rating-count link-primary">
