@@ -4,22 +4,15 @@ import { api, fullURL } from '../../api'
 import './HomePage.css'
 
 
-function HomePage() {
+function HomePage({cart}) {
   const [products, setProducts] = useState([]);
-  const [cart, setCart] = useState([]);
   console.log('VITE_API_BASE_URL:', import.meta.env.VITE_API_BASE_URL);
 
   useEffect(() =>{
     api.get('/api/products')
       .then((response) => {
         setProducts(response.data);
-    })
-
-    api.get('/api/cart')
-      .then((response) =>{
-        setCart(response.data);
-      })
-  }, []);
+  })}, []);
 
   return (
     <>
