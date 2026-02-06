@@ -64,7 +64,7 @@ function OrderPage({ cart }) {
                             Arriving on: {dayjs(product.estimatedDeliveryTimeMs).format('MMMM D')}
                           </div>
                           <div className="product-quantity">
-                            Quantity: {product.quantity}
+                            Quantity: {product.product.quantity}
                           </div>
                           <button className="buy-again-button button-primary">
                             <img className="buy-again-icon" src={`${fullURL}/images/icons/buy-again.png`} />
