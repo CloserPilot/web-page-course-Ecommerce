@@ -1,1 +1,1 @@
-export { default as api } from './api.jsx'
+export { api, fullURL } from './api.jsx'

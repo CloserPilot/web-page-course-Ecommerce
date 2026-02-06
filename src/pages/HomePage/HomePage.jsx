@@ -1,6 +1,6 @@
 import { Header } from '../../Components';
 import { useEffect, useState } from 'react';
-import { api } from '../../api'
+import { api, fullURL } from '../../api'
 import './HomePage.css'
 
 
@@ -40,7 +40,7 @@ function HomePage() {
                   {product.name}
                 </div>
                 <div className="product-rating-container">
-                  <img className="product-rating-stars" src={`images/ratings/rating-${product.rating.stars*10}.png`} />
+                  <img className="product-rating-stars" src={`${fullURL}/images/ratings/rating-${product.rating.stars*10}.png`} />
                   <div className="product-rating-count link-primary">
                     {product.rating.count}
                   </div>
@@ -68,7 +68,7 @@ function HomePage() {
                 <div className="product-spacer"></div>
 
                 <div className="added-to-cart">
-                  <img src="images/icons/checkmark.png" />
+                  <img src={`${fullURL}/images/icons/checkmark.png`} />
                   Added
                 </div>
 
