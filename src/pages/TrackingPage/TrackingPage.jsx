@@ -3,26 +3,35 @@ import { Header } from '../../Components'
 import { Link } from 'react-router'
 import { useParams } from 'react-router'
 import { useEffect, useState } from 'react';
-import { api } from '../../api'
+import { api, fullURL } from '../../api'
+import dayjs from 'dayjs';
 
 
 function TrackingPage({ cart }) {
-  const { orderId, productId } = useParams;
-  const [order, setOrder] = useState();
+  const { orderId, productId } = useParams();
+  const [order, setOrder] = useState(null);
 
   useEffect(() => {
-    const fetchProduct = async () => {
+    const fetchOrder = async () => {
       const response = await api.get(`/api/order/${orderId}?expand=product`);
-      setOrder(response.data);
+      setOrder(response.data.order);
     };
-    fetchProduct();
-  },[orderId]);
+    fetchOrder();
+  }, [orderId]);
+
+  if (!order) {
+    return null;
+  }
+
+  const product = order.products.find((orderProduct) => {
+    return orderProduct.productId === productId;
+  });
 
   return (
     <>
       <title>Tracking</title>
 
-      <Header cart={cart}/>
+      <Header cart={cart} />
 
       <div className="tracking-page">
         <div className="order-tracking">
@@ -31,18 +40,18 @@ function TrackingPage({ cart }) {
           </Link>
 
           <div className="delivery-date">
-            Arriving on Monday, June 13
+            Arriving on {dayjs(product.estimatedDeliveryTimeMs).format('MMMM D')}
           </div>
 
           <div className="product-info">
-            Black and Gray Athletic Cotton Socks - 6 Pairs
+            {product.product.name}
           </div>
 
           <div className="product-info">
-            Quantity: 1
+            Quantity: {product.quantity}
           </div>
 
-          <img className="product-image" src="images/products/athletic-cotton-socks-6-pairs.jpg" />
+          <img className="product-image" src={`${fullURL}/${product.product.image}`} />
 
           <div className="progress-labels-container">
             <div className="progress-label">
@@ -61,6 +70,7 @@ function TrackingPage({ cart }) {
           </div>
         </div>
       </div>
+
     </>
   )
 }
