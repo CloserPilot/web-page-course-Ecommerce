@@ -1,9 +1,9 @@
-import { fullURL } from "../../../api";
+import { fullURL, api } from "../../../api";
 import dayjs from "dayjs";
 import { formatMoney } from "../../../utils";
 import { DeliveryOptions } from './DeliveryOptions'
 
-function OrderSummary({ deliveryOptions, cart, loadCart}) {
+function OrderSummary({ deliveryOptions, cart, loadCart }) {
   return (
     <>
       <div className="order-summary">
@@ -12,6 +12,11 @@ function OrderSummary({ deliveryOptions, cart, loadCart}) {
           const selectedDeliveryOption = deliveryOptions.find((deliveryOption) => {
             return deliveryOption.id === cartItem.deliveryOptionId;
           })
+
+          const deleteCartItem = async () => {
+            await api.delete(`${fullURL}/api/cart/delete/${cartItem.productId}`);
+            await loadCart();
+          }
 
           return (
             <div key={cartItem.id} className="cart-item-container">
@@ -37,12 +42,12 @@ function OrderSummary({ deliveryOptions, cart, loadCart}) {
                     <span className="update-quantity-link link-primary">
                       Update
                     </span>
-                    <span className="delete-quantity-link link-primary">
+                    <span className="delete-quantity-link link-primary" onClick={deleteCartItem}>
                       Delete
                     </span>
                   </div>
                 </div>
-                <DeliveryOptions deliveryOptions={deliveryOptions} cartItem={cartItem} loadCart={loadCart}/>
+                <DeliveryOptions deliveryOptions={deliveryOptions} cartItem={cartItem} loadCart={loadCart} />
               </div>
             </div>
           )
