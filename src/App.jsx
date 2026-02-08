@@ -15,21 +15,21 @@ import './App.css'
 function App() {
   const [cart, setCart] = useState([]);
 
-  useEffect(() => {
-    const fetchAppData = async () => {
-      const response = await api.get('/api/cart?expand=product')
-      setCart(response.data);
-    };
+  const loadCart = async () => {
+    const response = await api.get('/api/cart?expand=product')
+    setCart(response.data);
+  };
 
-    fetchAppData();
+  useEffect(() => {
+    loadCart();
   }, []);
 
   return (
     <Routes>
-      <Route index element={<HomePage cart={cart} />} />
-      <Route path='/checkout' element={<CheckoutPage cart={cart}/>} />
-      <Route path='/orders' element={<OrderPage cart={cart}/>} />
-      <Route path='/tracking/:orderId/:productId' element={<TrackingPage cart={cart}/>} />
+      <Route index element={<HomePage cart={cart} loadCart={loadCart} />} />
+      <Route path='/checkout' element={<CheckoutPage cart={cart} />} />
+      <Route path='/orders' element={<OrderPage cart={cart} />} />
+      <Route path='/tracking/:orderId/:productId' element={<TrackingPage cart={cart} />} />
     </Routes>
   )
 }
