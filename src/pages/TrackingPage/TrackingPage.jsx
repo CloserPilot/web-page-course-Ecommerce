@@ -27,6 +27,14 @@ function TrackingPage({ cart }) {
     return orderProduct.productId === productId;
   });
 
+  const totalDeliveryTimesMS = product.estimatedDeliveryTimeMs - order.orderTimeMs;
+  const timePassedMS = dayjs().valueOf() - order.orderTimeMs;
+  const varProgress = Math.min(100, Math.max(0, (timePassedMS / totalDeliveryTimesMS) * 100));
+
+  const isPreparing = varProgress<=33;
+  const isShipped = varProgress>33 && varProgress<100;
+  const isDelivered = varProgress === 100;
+
   return (
     <>
       <title>Tracking</title>
@@ -54,19 +62,19 @@ function TrackingPage({ cart }) {
           <img className="product-image" src={`${fullURL}/${product.product.image}`} />
 
           <div className="progress-labels-container">
-            <div className="progress-label">
+            <div className={`progress-label ${isPreparing && 'current-status'}`}>
               Preparing
             </div>
-            <div className="progress-label current-status">
+            <div className={`progress-label ${isShipped && 'current-status'}`}>
               Shipped
             </div>
-            <div className="progress-label">
+            <div className={`progress-label ${isDelivered && 'current-status'}`}>
               Delivered
             </div>
           </div>
 
           <div className="progress-bar-container">
-            <div className="progress-bar"></div>
+            <div className="progress-bar" style={{width: `${varProgress}%`}}></div>
           </div>
         </div>
       </div>
