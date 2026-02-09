@@ -19,7 +19,7 @@ function Product({ product, loadCart }) {
   }
 
   return (
-    <div className="product-container">
+    <div className="product-container" data-testid="product-container">
       <div className="product-image-container">
         <img  className="product-image" 
               src={product.image}
@@ -74,6 +74,4 @@ function Product({ product, loadCart }) {
   );
 }
 
-export {
-  Product
-};
+export default Product;

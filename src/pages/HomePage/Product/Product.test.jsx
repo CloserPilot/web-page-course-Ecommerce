@@ -1,6 +1,6 @@
 import { it, expect, describe, vi, beforeEach } from 'vitest';
 import { render, screen } from '@testing-library/react';
-import { Product } from './Product.jsx';
+import Product from './Product.jsx';
 import { userEvent } from '@testing-library/user-event'
 import { fullURL } from '../../../api/api.jsx';
 
