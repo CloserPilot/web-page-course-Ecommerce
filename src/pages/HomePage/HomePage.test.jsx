@@ -2,7 +2,6 @@ import { it, expect, describe, vi, beforeEach } from 'vitest';
 import { render, screen, within } from '@testing-library/react';
 import HomePage from './HomePage.jsx';
 import { MemoryRouter } from 'react-router';
-import { userEvent } from '@testing-library/user-event';
 
 vi.mock('../../api', async (importOriginal) => {
   const originalModule = await importOriginal(); // importa todo el módulo real
