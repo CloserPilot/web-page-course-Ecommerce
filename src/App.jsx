@@ -10,6 +10,8 @@ import { useEffect, useState } from 'react';
 import { api } from './api'
 import './App.css'
 
+//Hace accesible api desde la consola del browser
+window.api = api;
 
 
 function App() {
