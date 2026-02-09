@@ -7,7 +7,7 @@ import { formatMoney } from '../../utils'
 import './OrderPage.css'
 
 
-function OrderPage({ cart }) {
+function OrderPage({ cart, loadCart }) {
   const [orders, setOrders] = useState([]);
 
   useEffect(() => {
@@ -53,6 +53,15 @@ function OrderPage({ cart }) {
 
                 <div className="order-details-grid">
                   {order.products.map((product) => {
+                    
+                    const setItemToCart = async () => {
+                      await api.post('/api/cart/register', {
+                        productID: product.productId,
+                        quantity: 1
+                      });
+                      await loadCart()
+                    }
+
                     return (
                       <Fragment key={product.productId}>
                         <div className="product-image-container">
@@ -69,7 +78,7 @@ function OrderPage({ cart }) {
                           <div className="product-quantity">
                             Quantity: {product.quantity}
                           </div>
-                          <button className="buy-again-button button-primary">
+                          <button className="buy-again-button button-primary" onClick={setItemToCart}>
                             <img className="buy-again-icon" src={`${fullURL}/images/icons/buy-again.png`} />
                             <span className="buy-again-message">Add to Cart</span>
                           </button>
